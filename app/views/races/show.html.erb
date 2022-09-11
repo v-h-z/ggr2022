@@ -1,0 +1,11 @@
+<ul>
+  <% @race.boats.each do |boat|  %>
+    <li>
+      <%= boat.name %>
+      <ul>
+        <li> speed: <%= boat.positions.last.sog %> </li>
+        <li> cap: <%= boat.positions.last.cog %> </li>
+      </ul>
+    </li>
+  <% end -%>
+</ul>
