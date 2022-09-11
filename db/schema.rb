@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_09_11_124008) do
+ActiveRecord::Schema[7.0].define(version: 2022_09_11_124728) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -22,6 +22,23 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_11_124008) do
     t.index ["race_id"], name: "index_boats_on_race_id"
   end
 
+  create_table "positions", force: :cascade do |t|
+    t.string "gps_at"
+    t.string "latitude"
+    t.string "longitude"
+    t.string "altitude"
+    t.string "sog"
+    t.string "cog"
+    t.string "battery"
+    t.string "yb_id"
+    t.string "temperature"
+    t.string "tx_at"
+    t.bigint "boat_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["boat_id"], name: "index_positions_on_boat_id"
+  end
+
   create_table "races", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -30,4 +47,5 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_11_124008) do
   end
 
   add_foreign_key "boats", "races"
+  add_foreign_key "positions", "boats"
 end
