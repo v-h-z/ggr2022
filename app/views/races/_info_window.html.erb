@@ -2,5 +2,8 @@
   <li><%= boat.name %></li>
   <li>speed: <%= boat.positions.last.sog%></li>
   <li>avg speed: <%= (boat.positions.map(&:sog).map(&:to_f).sum/boat.positions.count).round(2) %> </li>
+  <li>temp: <%= boat.positions.last.temperature%></li>
+  <li>cog: <%= boat.positions.last.cog%></li>
+  <li>battery: <%= boat.positions.last.battery%></li>
 </ul>
 

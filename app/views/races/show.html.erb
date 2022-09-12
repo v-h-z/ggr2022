@@ -6,6 +6,8 @@
     <% temps.delete(0.0) %>
     <li>Avg Speed across fleet: <%= (speeds.sum/speeds.count).round(2) %> knts</li>
     <li>Avg Temp across fleet: <%= (temps.sum/temps.count).round(2) %> °C</li>
+    <li>Temp range: <%= temps.minmax.join(' - ') %> °C</li>
+    <li>Fastest avg speed: <%= @race.boats.sort_by{_1.positions.map(&:sog).map(&:to_f).sum/_1.positions.count}.reverse.first.name %></li>
   </ul>
 </div>
 <div style="width: 100%; height: 100vh;"
