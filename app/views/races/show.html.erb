@@ -1,7 +1,11 @@
 <div style='position: absolute; z-index: 100;'>
   <ul>
-    <li>Avg Speed across fleet: <%= (@race.boats.map{_1.positions.last}.map(&:sog).map(&:to_f).sum/@race.boats.count).round(2) %> knts</li>
-    <li>Avg Temp across fleet: <%= (@race.boats.map{_1.positions.last}.map(&:temperature).map(&:to_f).sum/@race.boats.count).round(2) %> °C</li>
+    <% speeds = @race.boats.map{_1.positions.last}.map(&:sog).map(&:to_f) %>
+    <% speeds.delete(0.0) %>
+    <% temps = @race.boats.map{_1.positions.last}.map(&:temperature).map(&:to_f) %>
+    <% temps.delete(0.0) %>
+    <li>Avg Speed across fleet: <%= (speeds.sum/speeds.count).round(2) %> knts</li>
+    <li>Avg Temp across fleet: <%= (temps.sum/temps.count).round(2) %> °C</li>
   </ul>
 </div>
 <div style="width: 100%; height: 100vh;"
