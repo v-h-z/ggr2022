@@ -1,13 +1,14 @@
 <div style='position: absolute; z-index: 100;'>
   <ul>
-    <% speeds = @race.boats.map{_1.positions.last}.map(&:sog).map(&:to_f) %>
+    <%# boats = @race.boats.select{!_1.positions.empty?} %>
+    <% speeds = @boats.map{_1.positions.last}.map(&:sog).map(&:to_f) %>
     <% speeds.delete(0.0) %>
-    <% temps = @race.boats.map{_1.positions.last}.map(&:temperature).map(&:to_f) %>
+    <% temps = @boats.map{_1.positions.last}.map(&:temperature).map(&:to_f) %>
     <% temps.delete(0.0) %>
     <li>Avg Speed across fleet: <%= (speeds.sum/speeds.count).round(2) %> knts</li>
     <li>Avg Temp across fleet: <%= (temps.sum/temps.count).round(2) %> °C</li>
     <li>Temp range: <%= temps.minmax.join(' - ') %> °C</li>
-    <li>Fastest avg speed: <%= @race.boats.sort_by{_1.positions.map(&:sog).map(&:to_f).sum/_1.positions.count}.reverse.first.name %></li>
+    <li>Fastest avg speed: <%= @boats.sort_by{_1.positions.map(&:sog).map(&:to_f).sum/_1.positions.count}.reverse.first.name %></li>
     <li>Bip count: <%= Position.all.pluck(:gps_at).uniq.map(&:to_datetime).map{[_1.day, _1.hour]}.uniq.count %> </li>
     <li>Next bip in: <%= time_ago_in_words(Position.last.gps_at.to_datetime + 4.hours) %> </li>
   </ul>

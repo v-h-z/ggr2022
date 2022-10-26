@@ -5,16 +5,15 @@ class RacesController < ApplicationController
 
   def show
     @race = Race.find(params['id'])
+    @boats = @race.boats.select{!_1.positions.empty?}
     PositionsUpdate.new(@race).call
-    @markers = @race.boats.map do |boat|
+    @markers = @boats.map do |boat|
       position = boat.positions.last
-      if position
-        {
-          lat: position.latitude,
-          lng: position.longitude,
-          info_window: render_to_string(partial: "info_window", locals: {boat: boat})
-        }
-      end
+      {
+        lat: position.latitude,
+        lng: position.longitude,
+        info_window: render_to_string(partial: "info_window", locals: {boat: boat})
+      }
     end
   end
 end
